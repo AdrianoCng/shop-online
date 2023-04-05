@@ -1,0 +1,18 @@
+{
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "airbnb-base",
+    "prettier",
+    "plugin:node/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "prettier"],
+  "rules": {
+    "prettier/prettier": "error"
+    // "no-unused-vars": "warn",
+  }
+}
