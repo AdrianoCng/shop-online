@@ -30,6 +30,7 @@
     "typescript": "^5.0.3"
   },
   "dependencies": {
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "helmet": "^6.0.1"
   }
 }
