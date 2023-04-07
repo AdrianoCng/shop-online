@@ -1,5 +1,5 @@
 // TODO: remove eslint-disable
 /* eslint-disable import/prefer-default-export */
-import loginController from './loginController';
+import authControllers from './authControllers';
 
-export { loginController };
+export { authControllers };
