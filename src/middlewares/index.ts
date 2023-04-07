@@ -1,5 +1,3 @@
-import errorHandler from './errorHandler';
-import validate from './validate';
-import tryCatch from './tryCatch';
-
-export { errorHandler, validate, tryCatch };
+export { default as errorHandler } from './errorHandler';
+export { default as validate } from './validate';
+export { default as tryCatch } from './tryCatch';

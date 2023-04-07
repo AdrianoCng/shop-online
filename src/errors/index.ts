@@ -1,4 +1,2 @@
-import AuthError from './AuthError';
-
 export * from './CustomError';
-export { AuthError };
+export { default as AuthError } from './AuthError';
