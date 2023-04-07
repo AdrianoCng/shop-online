@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import { loginControllers } from '../controllers';
+import { loginController } from '../controllers';
 
 const loginRouter = Router();
 
-loginRouter.get('/', loginControllers.getUsers);
+loginRouter.get('/', loginController.getUsers);
 
 export default loginRouter;
