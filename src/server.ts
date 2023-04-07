@@ -3,7 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
-import errorHandler from './middlewares/errorHandler';
+import { errorHandler } from './middlewares';
 
 import router from './routes';
 

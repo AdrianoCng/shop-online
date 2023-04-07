@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import tryCatch from '../middlewares/tryCatch';
+import { tryCatch } from '../middlewares';
 import { authControllers } from '../controllers';
 
 const authRouter = Router();

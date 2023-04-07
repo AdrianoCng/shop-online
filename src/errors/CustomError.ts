@@ -1,3 +1,13 @@
+import { Location } from 'express-validator';
+
+export interface ICustomError {
+  statusCode: number;
+  msg: string;
+  param?: string;
+  value?: string;
+  location?: Location;
+}
+
 abstract class CustomError extends Error {
   public abstract readonly statusCode: number;
 
@@ -8,7 +18,7 @@ abstract class CustomError extends Error {
     Error.captureStackTrace(this);
   }
 
-  abstract formatErrors(): { statusCode: number; msg: string; param?: string }[];
+  abstract formatErrors(): ICustomError[];
 }
 
 export default CustomError;
