@@ -7,7 +7,7 @@ class AuthError extends CustomError {
 
   constructor() {
     super();
-    Object.setPrototypeOf(this, CustomError.prototype);
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 
   formatErrors() {
