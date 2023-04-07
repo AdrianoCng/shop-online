@@ -10,7 +10,12 @@ const errorHandler = (err: Error, _req: Request, res: Response, _: NextFunction)
   }
 
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    errors: [{ statusCode: 500, msg: err.message || ReasonPhrases.INTERNAL_SERVER_ERROR }],
+    errors: [
+      {
+        statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+        msg: err.message || ReasonPhrases.INTERNAL_SERVER_ERROR,
+      },
+    ],
   });
 };
 
