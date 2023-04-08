@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { ValidationChain, validationResult } from 'express-validator';
 
-import ValidateError from '../errors/ValidateError';
+import { ValidateError } from '../errors';
 import tryCatch from './tryCatch';
 
 const validate = (validations: ValidationChain[]) =>
