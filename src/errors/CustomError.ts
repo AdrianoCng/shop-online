@@ -1,7 +1,6 @@
 import { Location } from 'express-validator';
 
 export interface ICustomError {
-  statusCode: number;
   msg: string;
   param?: string;
   value?: string;

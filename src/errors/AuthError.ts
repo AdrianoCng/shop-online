@@ -11,7 +11,7 @@ class AuthError extends CustomError {
   }
 
   formatErrors() {
-    return [{ statusCode: this.statusCode, msg: ReasonPhrases.UNAUTHORIZED }];
+    return [{ msg: this.message || ReasonPhrases.UNAUTHORIZED }];
   }
 }
 

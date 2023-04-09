@@ -19,7 +19,6 @@ class ValidateError extends CustomError {
   formatErrors() {
     return this.errors
       .formatWith<ICustomError>(({ param, msg, value, location }) => ({
-        statusCode: this.statusCode,
         msg: msg || ReasonPhrases.BAD_REQUEST,
         param,
         value,
