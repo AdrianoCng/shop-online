@@ -16,6 +16,7 @@ const refreshTokenSchema = new Schema<IRefreshToken>({
   userID: {
     type: Schema.Types.ObjectId,
     ref: 'User',
+    required: true,
   },
   createdAt: {
     type: Date,

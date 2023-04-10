@@ -6,7 +6,7 @@ import { signupValidation } from '../validations';
 
 const authRouter = Router();
 
-authRouter.get('/login', tryCatch(authControllers.getUsers));
+authRouter.post('/login', tryCatch(authControllers.loginUser));
 authRouter.post('/signup', validate(signupValidation), tryCatch(authControllers.registerUser));
 
 export default authRouter;

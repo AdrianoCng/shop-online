@@ -17,29 +17,70 @@ const getUsers = async (req: Request, res: Response) => {
 const registerUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
+  const newUser = await User.create({ email, password });
+
+  const userID = newUser._id;
+
   const payload = {
     email,
     password,
+    userID,
   };
-
-  const newUser = await User.create(payload);
 
   const tokens = generateTokens(payload);
 
   await RefreshToken.create({
     refreshToken: tokens.refreshToken,
-    userID: newUser._id,
+    userID,
   });
 
   const respData = {
     ...tokens,
-    userID: newUser._id,
+    userID,
   };
 
   return res.status(StatusCodes.CREATED).json(respData);
 };
 
+const loginUser = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    // TODO: Send status and response
+    return res.status(404).send('not found');
+  }
+
+  const isValidPassword = await user.isValidPassword(password);
+
+  if (!isValidPassword) {
+    return res.status(403).send('Password do not match');
+  }
+
+  const userID = user._id;
+
+  const payload = {
+    email,
+    password,
+    userID,
+  };
+
+  const tokens = generateTokens(payload);
+
+  await RefreshToken.create({
+    refreshToken: tokens.refreshToken,
+    userID,
+  });
+
+  return res.status(200).json({
+    ...tokens,
+    userID,
+  });
+};
+
 export default {
   getUsers,
   registerUser,
+  loginUser,
 };
