@@ -9,7 +9,7 @@ export interface IUser extends Document {
 }
 
 export interface IUserMethods {
-  isValidPassword(password: string): Promise<boolean>;
+  comparePassword(password: string): Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser, Model<IUser>, IUserMethods>({
@@ -24,7 +24,7 @@ const userSchema = new Schema<IUser, Model<IUser>, IUserMethods>({
   },
 });
 
-userSchema.method('isValidPassword', async function isValidPassword(password: string) {
+userSchema.method('comparePassword', async function comparePassword(password: string) {
   try {
     return await bcrypt.compare(password, this.password);
   } catch (error) {

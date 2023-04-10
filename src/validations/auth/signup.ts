@@ -8,6 +8,7 @@ export default [
     .withMessage('Please enter a valid email')
     .trim()
     .bail()
+    // TODO: Move this to registerUser controller
     .custom(async (email) => {
       const user = await User.find({ email });
 

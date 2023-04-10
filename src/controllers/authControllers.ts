@@ -1,18 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import { RefreshToken, User } from '../models';
 import { generateTokens } from '../utils';
-
-const getUsers = async (req: Request, res: Response) => {
-  const users = await User.find();
-
-  if (!users) {
-    return res.status(404).send('not found');
-  }
-
-  return res.send(users);
-};
+import { AuthError } from '../errors';
 
 const registerUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -42,20 +33,19 @@ const registerUser = async (req: Request, res: Response) => {
   return res.status(StatusCodes.CREATED).json(respData);
 };
 
-const loginUser = async (req: Request, res: Response) => {
+const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
 
   if (!user) {
-    // TODO: Send status and response
-    return res.status(404).send('not found');
+    return next(new AuthError());
   }
 
-  const isValidPassword = await user.isValidPassword(password);
+  const isValidPassword = await user.comparePassword(password);
 
   if (!isValidPassword) {
-    return res.status(403).send('Password do not match');
+    return next(new AuthError());
   }
 
   const userID = user._id;
@@ -80,7 +70,6 @@ const loginUser = async (req: Request, res: Response) => {
 };
 
 export default {
-  getUsers,
   registerUser,
   loginUser,
 };
