@@ -45,14 +45,16 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 
   const user = await User.findOne({ email });
 
+  const invalidCredentialsError = new AuthError('Invalid email or password');
+
   if (!user) {
-    return next(new AuthError('Invalid email or password'));
+    return next(invalidCredentialsError);
   }
 
   const isValidPassword = await user.comparePassword(password);
 
   if (!isValidPassword) {
-    return next(new AuthError('Invalid email or password'));
+    return next(invalidCredentialsError);
   }
 
   const userID = user._id;
