@@ -8,6 +8,7 @@ class AuthError extends CustomError {
   constructor(message: string = ReasonPhrases.UNAUTHORIZED) {
     super();
     Object.setPrototypeOf(this, new.target.prototype);
+    Error.captureStackTrace(this);
 
     this.message = message;
   }

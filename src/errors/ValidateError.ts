@@ -12,6 +12,7 @@ class ValidateError extends CustomError {
     super();
 
     Object.setPrototypeOf(this, new.target.prototype);
+    Error.captureStackTrace(this);
 
     this.errors = errors;
   }

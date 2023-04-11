@@ -9,6 +9,7 @@ class NotFound extends CustomError {
   constructor(message: string = ReasonPhrases.NOT_FOUND) {
     super();
     Object.setPrototypeOf(this, new.target.prototype);
+    Error.captureStackTrace(this);
 
     this.message = message;
   }

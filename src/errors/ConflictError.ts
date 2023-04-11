@@ -9,6 +9,7 @@ class ConflictError extends CustomError {
     super();
 
     Object.setPrototypeOf(this, new.target.prototype);
+    Error.captureStackTrace(this);
 
     this.message = message;
   }
