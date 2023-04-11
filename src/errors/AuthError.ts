@@ -5,11 +5,11 @@ import CustomError from './CustomError';
 class AuthError extends CustomError {
   readonly statusCode = StatusCodes.UNAUTHORIZED;
 
-  readonly message = ReasonPhrases.UNAUTHORIZED;
-
-  constructor() {
+  constructor(message: string = ReasonPhrases.UNAUTHORIZED) {
     super();
     Object.setPrototypeOf(this, new.target.prototype);
+
+    this.message = message;
   }
 
   formatErrors() {

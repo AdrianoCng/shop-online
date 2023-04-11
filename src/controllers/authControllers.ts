@@ -46,13 +46,13 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    return next(new AuthError());
+    return next(new AuthError('Invalid email or password'));
   }
 
   const isValidPassword = await user.comparePassword(password);
 
   if (!isValidPassword) {
-    return next(new AuthError());
+    return next(new AuthError('Invalid email or password'));
   }
 
   const userID = user._id;
