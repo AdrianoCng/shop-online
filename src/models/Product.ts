@@ -7,14 +7,14 @@ export interface Review {
   comment?: string;
 }
 
-export interface IProduct extends Document {
+export interface IProduct {
   name: string;
   description: string;
   price: number;
   availability: 'in stock' | 'unavailable';
   quantity: number;
   brand: string;
-  category?: string;
+  category: string;
   image?: string;
   reviews?: Review[];
   isOnSale?: boolean;
@@ -24,7 +24,9 @@ export interface IProduct extends Document {
   tags?: string[];
 }
 
-const productSchema = new Schema<IProduct>({
+export type IProductDocument = IProduct & Document;
+
+const productSchema = new Schema<IProductDocument>({
   name: {
     type: String,
     required: true,
@@ -65,18 +67,35 @@ const productSchema = new Schema<IProduct>({
       },
     },
   ],
-  isOnSale: Boolean,
+  isOnSale: {
+    type: Boolean,
+    immutable: true,
+  },
   discountPercentage: {
     type: Number,
     min: 0,
     max: 100,
   },
-  salePrice: Number,
+  salePrice: {
+    type: Number,
+    immutable: true,
+  },
   shippingCost: Number,
   tags: {
     type: Array,
     of: String,
   },
+});
+
+productSchema.pre('save', function (next) {
+  if (!!this.discountPercentage && this.discountPercentage > 0) {
+    const discountAmount = (this.price * this.discountPercentage) / 100;
+
+    this.isOnSale = true;
+    this.salePrice = parseFloat((this.price - discountAmount).toFixed(2));
+  }
+
+  next();
 });
 
 export const Product = db.model('Product', productSchema);
