@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { FilterQuery, Model } from 'mongoose';
 
-import { tryCatch } from '@middlewares/index';
+import tryCatch from './tryCatch';
 
 /* eslint-disable @typescript-eslint/no-namespace */
 declare global {
