@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import { tryCatch, validate, paginate } from '../middlewares';
-import { productsControllers } from '../controllers';
-import { postProductValidation } from '../validations';
-import { Product } from '../models';
+import { tryCatch, validate, paginate } from '@middlewares/index';
+import { productsControllers } from '@controllers/index';
+import { postProductValidation } from '@validations/index';
+import { Product } from '@models/index';
 
 const productRouter = Router();
 

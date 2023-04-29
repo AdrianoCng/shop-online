@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 
-import { Product } from '../models';
-import InternalServerError from '../errors/InternalServerError';
+import { Product } from '@models/index';
+import { InternalServerError } from '@errors/index';
 
 const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
   const paginatedProducts = req.paginatedResults;

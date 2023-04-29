@@ -1,10 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
 import { NextFunction, Request, Response } from 'express';
 
-import { RefreshToken, User } from '../models';
-import { generateTokens } from '../utils';
-import { AuthError } from '../errors';
-import ConflictError from '../errors/ConflictError';
+import { RefreshToken, User } from '@models/index';
+import { generateTokens } from '@utils/index';
+import { AuthError, ConflictError } from '@errors/index';
 
 const registerUser = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;

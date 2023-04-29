@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { AuthError } from '../errors';
-import { TokenPayload } from '../utils/generateTokens';
+import { AuthError } from '@errors/index';
+import { TokenPayload } from 'utils/generateTokens';
 
 const secretAccessToken = process.env.SECRET_ACCESS_TOKEN || '';
 

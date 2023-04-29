@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as dotenv from 'dotenv';
 dotenv.config();
+import 'tsconfig-paths/register';
 
 import app from './server';
 
