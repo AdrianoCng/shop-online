@@ -9,7 +9,8 @@ export interface TokenPayload {
   userID: string;
 }
 const generateTokens = (payload: TokenPayload) => {
-  const accessToken = jwt.sign(payload, secretAccessToken, { expiresIn: '1m' });
+  // TODO: change expiresIn: '1m'
+  const accessToken = jwt.sign(payload, secretAccessToken, { expiresIn: '1d' });
   const refreshToken = jwt.sign(payload, secretRefreshToken, { expiresIn: '30d' });
 
   return { accessToken, refreshToken };
