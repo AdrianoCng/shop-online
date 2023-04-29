@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 
 import { RefreshToken, User } from '@models/index';
 import { generateTokens } from '@utils/index';
-import { AuthError, ConflictError } from '@errors/index';
+import CustomError from '@errors/CustomError';
 
 const registerUser = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
@@ -11,7 +11,7 @@ const registerUser = async (req: Request, res: Response, next: NextFunction) => 
   const user = await User.findOne({ email });
 
   if (user) {
-    return next(new ConflictError('User already exists'));
+    return next(new CustomError(StatusCodes.CONFLICT, 'User already exists'));
   }
 
   const newUser = await User.create({ email, password });
@@ -44,7 +44,10 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 
   const user = await User.findOne({ email });
 
-  const invalidCredentialsError = new AuthError('Invalid email or password');
+  const invalidCredentialsError = new CustomError(
+    StatusCodes.UNAUTHORIZED,
+    'Invalid email or password'
+  );
 
   if (!user) {
     return next(invalidCredentialsError);

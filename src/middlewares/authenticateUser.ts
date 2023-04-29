@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { AuthError } from '@errors/index';
 import { TokenPayload } from 'utils/generateTokens';
+import { CustomError } from '@errors/index';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 
 /* eslint-disable @typescript-eslint/no-namespace */
 declare global {
@@ -18,12 +19,12 @@ export default function authenticateUser(req: Request, _: Response, next: NextFu
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
-    return next(new AuthError());
+    return next(new CustomError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED));
   }
 
   return jwt.verify(token, secretAccessToken, (err, user) => {
     if (err || !user) {
-      return next(new AuthError());
+      return next(new CustomError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED));
     }
 
     req.user = user as TokenPayload;

@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 
-import CustomError from '../errors/CustomError';
+import AbstractError from '../errors/AbstractError';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const errorHandler = (err: Error, _req: Request, res: Response, _: NextFunction) => {
-  if (err instanceof CustomError) {
+  if (err instanceof AbstractError) {
     return res
       .status(err.statusCode)
       .json({ statusCode: err.statusCode, errors: err.formatErrors() });

@@ -1,23 +1,19 @@
-import { Location } from 'express-validator';
+import AbstractError from './AbstractError';
 
-export interface ICustomError {
-  msg: string;
-  param?: string;
-  value?: string;
-  location?: Location;
-}
+export default class CustomError extends AbstractError {
+  public readonly statusCode: number;
 
-abstract class CustomError extends Error {
-  public abstract readonly statusCode: number;
-
-  constructor() {
+  constructor(statusCode: number, message: string) {
     super();
 
-    Object.setPrototypeOf(this, CustomError.prototype);
+    Object.setPrototypeOf(this, new.target.prototype);
     Error.captureStackTrace(this);
+
+    this.statusCode = statusCode;
+    this.message = message;
   }
 
-  abstract formatErrors(): ICustomError[];
+  formatErrors() {
+    return [{ msg: this.message }];
+  }
 }
-
-export default CustomError;

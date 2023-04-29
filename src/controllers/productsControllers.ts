@@ -1,14 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
-import { StatusCodes, ReasonPhrases } from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 
 import { Product } from '@models/index';
-import { InternalServerError } from '@errors/index';
 
 const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
   const paginatedProducts = req.paginatedResults;
 
   if (!paginatedProducts) {
-    return next(new InternalServerError());
+    return next(new Error());
   }
 
   return res.status(StatusCodes.OK).json(paginatedProducts);
@@ -18,7 +17,7 @@ const postProduct = async (req: Request, res: Response, next: NextFunction) => {
   const product = await Product.create(req.body);
 
   if (!product) {
-    return next(new Error(ReasonPhrases.INTERNAL_SERVER_ERROR));
+    return next(new Error());
   }
 
   return res.status(StatusCodes.CREATED).json(product);
