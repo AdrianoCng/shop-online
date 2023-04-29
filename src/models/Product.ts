@@ -87,7 +87,7 @@ const productSchema = new Schema<IProductDocument>({
   },
 });
 
-productSchema.pre('save', function (next) {
+productSchema.pre('save', function preSave(next) {
   if (!!this.discountPercentage && this.discountPercentage > 0) {
     const discountAmount = (this.price * this.discountPercentage) / 100;
 
