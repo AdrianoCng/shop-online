@@ -12,5 +12,5 @@ export default [
   body('reviews').optional().isArray(),
   body('discountPercentage').optional().isInt({ min: 0, max: 100 }),
   body('shippingCost').optional().isFloat({ gt: 0 }),
-  body('tags').isArray(),
+  body('tags').optional().isArray(),
 ];
