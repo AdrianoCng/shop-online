@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 
 import { Product } from '@models/index';
 import CustomError from '@errors/CustomError';
