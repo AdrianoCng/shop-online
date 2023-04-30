@@ -25,23 +25,38 @@ const postProduct = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
-  const productID = req.params?.id;
-
-  if (!productID) {
-    return next(new CustomError(StatusCodes.BAD_REQUEST));
-  }
+  const productID = req.params.id;
 
   const deletedProduct = await Product.findByIdAndDelete(productID);
 
   if (!deletedProduct) {
-    return next(new CustomError(StatusCodes.NOT_FOUND));
+    return next(new CustomError(StatusCodes.NOT_FOUND, 'Product not found'));
   }
 
   return res.status(StatusCodes.OK).json(deletedProduct);
+};
+
+const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
+  const productID = req.params.id;
+
+  delete req.body?.reviews;
+
+  const updatedProduct = await Product.findByIdAndUpdate(
+    productID,
+    { $set: req.body },
+    { new: true, runValidators: true }
+  );
+
+  if (!updatedProduct) {
+    return next(new CustomError(StatusCodes.NOT_FOUND, 'Product not found'));
+  }
+
+  return res.status(StatusCodes.CREATED).json(updatedProduct);
 };
 
 export default {
   getAllProducts,
   postProduct,
   deleteProduct,
+  updateProduct,
 };
