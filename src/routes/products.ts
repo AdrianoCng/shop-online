@@ -11,5 +11,6 @@ productRouter.use(authenticateUser);
 
 productRouter.get('/', paginate(Product), tryCatch(productsControllers.getAllProducts));
 productRouter.post('/', validate(postProductValidation), tryCatch(productsControllers.postProduct));
+productRouter.delete('/:id', tryCatch(productsControllers.deleteProduct));
 
 export default productRouter;
