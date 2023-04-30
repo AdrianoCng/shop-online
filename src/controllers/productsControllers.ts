@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 import { Product } from '@models/index';
-import CustomError from '@errors/CustomError';
+import { CustomError } from '@errors/index';
 
 const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
   const paginatedProducts = req.paginatedResults;

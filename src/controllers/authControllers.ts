@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 
 import { RefreshToken, User } from '@models/index';
 import { generateTokens } from '@utils/index';
-import CustomError from '@errors/CustomError';
+import { CustomError } from '@errors/index';
 
 const registerUser = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;

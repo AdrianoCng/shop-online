@@ -1,4 +1,5 @@
 import { getReasonPhrase } from 'http-status-codes';
+
 import AbstractError from './AbstractError';
 
 export default class CustomError extends AbstractError {

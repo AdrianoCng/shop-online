@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 
-import AbstractError from '../errors/AbstractError';
+import { AbstractError } from '@errors/index';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const errorHandler = (err: Error, _req: Request, res: Response, _: NextFunction) => {

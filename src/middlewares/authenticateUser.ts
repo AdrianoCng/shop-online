@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-
-import { TokenPayload } from 'utils/generateTokens';
-import { CustomError } from '@errors/index';
 import { StatusCodes } from 'http-status-codes';
+
+import { CustomError } from '@errors/index';
+import { TokenPayload } from '@utils/generateTokens';
 
 /* eslint-disable @typescript-eslint/no-namespace */
 declare global {
