@@ -33,7 +33,7 @@ const deleteProduct = async (req: Request, res: Response, next: NextFunction) =>
     return next(new CustomError(StatusCodes.NOT_FOUND, 'Product not found'));
   }
 
-  return res.status(StatusCodes.OK).json(deletedProduct);
+  return res.sendStatus(StatusCodes.NO_CONTENT);
 };
 
 const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
@@ -51,7 +51,24 @@ const updateProduct = async (req: Request, res: Response, next: NextFunction) =>
     return next(new CustomError(StatusCodes.NOT_FOUND, 'Product not found'));
   }
 
-  return res.status(StatusCodes.CREATED).json(updatedProduct);
+  return res.status(StatusCodes.OK).json(updatedProduct);
+};
+
+const addReview = async (req: Request, res: Response, next: NextFunction) => {
+  const productID = req.params.id;
+  const review = req.body;
+
+  const product = await Product.findById(productID);
+
+  if (!product) {
+    return next(new CustomError(StatusCodes.NOT_FOUND, 'Product not found'));
+  }
+
+  product.reviews?.push(review);
+
+  const updatedProduct = await product.save();
+
+  return res.status(StatusCodes.OK).json(updatedProduct);
 };
 
 export default {
@@ -59,4 +76,5 @@ export default {
   postProduct,
   deleteProduct,
   updateProduct,
+  addReview,
 };

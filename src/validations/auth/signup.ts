@@ -1,7 +1,13 @@
 import { body } from 'express-validator';
 
 export default [
-  body('email').notEmpty().isEmail().withMessage('Please enter a valid email').trim().bail(),
+  body('email')
+    .notEmpty()
+    .isEmail()
+    .withMessage('Please enter a valid email')
+    .trim()
+    .toLowerCase()
+    .bail(),
   body('password')
     .notEmpty()
     .withMessage('Please enter your passowrd')

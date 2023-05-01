@@ -18,6 +18,7 @@ export interface IProduct {
   category: string;
   image?: string;
   reviews?: Review[];
+  rating: number;
   isOnSale?: boolean;
   discountPercentage?: number;
   salePrice?: number;
@@ -31,10 +32,12 @@ const productSchema = new Schema<IProductDocument>({
   name: {
     type: String,
     required: true,
+    lowercase: true,
   },
   description: {
     type: String,
     required: true,
+    lowercase: true,
   },
   price: {
     type: Number,
@@ -52,8 +55,12 @@ const productSchema = new Schema<IProductDocument>({
   brand: {
     type: String,
     required: true,
+    lowercase: true,
   },
-  category: String,
+  category: {
+    type: String,
+    lowercase: true,
+  },
   image: String,
   reviews: [
     {
@@ -70,6 +77,7 @@ const productSchema = new Schema<IProductDocument>({
       },
     },
   ],
+  rating: Number,
   isOnSale: {
     type: Boolean,
     immutable: true,
@@ -86,16 +94,33 @@ const productSchema = new Schema<IProductDocument>({
   shippingCost: Number,
   tags: {
     type: Array,
-    of: String,
+    of: {
+      type: String,
+      lowercase: true,
+    },
   },
 });
 
-productSchema.pre('save', function preSave(next) {
+// TODO: pre save not working properly - inOnSale and salePrice should be update on product updates
+productSchema.pre('save', function isOnSale(next) {
   if (!!this.discountPercentage && this.discountPercentage > 0) {
     const discountAmount = (this.price * this.discountPercentage) / 100;
 
     this.isOnSale = true;
     this.salePrice = parseFloat((this.price - discountAmount).toFixed(2));
+  }
+
+  next();
+});
+
+productSchema.pre('save', function getRating(next) {
+  const { reviews } = this;
+
+  if (reviews && reviews.length > 0) {
+    const ratingSum = reviews.reduce((acc, { rating }) => acc + rating, 0);
+    const average = ratingSum / reviews.length;
+
+    this.rating = average;
   }
 
   next();
