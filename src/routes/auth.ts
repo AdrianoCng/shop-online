@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-import { tryCatch, validate } from '../middlewares';
-import { authControllers } from '../controllers';
-import { loginValidation, signupValidation } from '../validations';
+import { tryCatch, validate } from '@middlewares/index';
+import { authControllers } from '@controllers/index';
+import { loginValidation, signupValidation } from '@validations/index';
 
 const authRouter = Router();
 

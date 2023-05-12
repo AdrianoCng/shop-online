@@ -1,3 +1,3 @@
-export { default as AuthError } from './AuthError';
+export { default as AbstractError } from './AbstractError';
 export { default as ValidateError } from './ValidateError';
-export { default as NotFound } from './NotFound';
+export { default as CustomError } from './CustomError';

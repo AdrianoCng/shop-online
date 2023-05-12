@@ -5,17 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon -r tsconfig-paths/register src/index.ts",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write src",
     "format:check": "prettier --check src"
   },
   "engines": {
-    "node": ">=18.15.0",
-    "npm": ">=8.3.0"
+    "node": ">=18.16.0",
+    "npm": ">=9.5.1"
   },
-  "author": "",
+  "author": "Adriano Cangiamila",
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -36,6 +36,7 @@
     "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.0.3"
   },
   "dependencies": {

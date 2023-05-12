@@ -1,9 +1,9 @@
 import { Result, ValidationError } from 'express-validator';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 
-import CustomError, { ICustomError } from './CustomError';
+import AbstractError, { IAbstractError } from './AbstractError';
 
-class ValidateError extends CustomError {
+class ValidateError extends AbstractError {
   public readonly errors: Result<ValidationError>;
 
   public readonly statusCode = StatusCodes.BAD_REQUEST;
@@ -19,7 +19,7 @@ class ValidateError extends CustomError {
 
   formatErrors() {
     return this.errors
-      .formatWith<ICustomError>(({ param, msg, value, location }) => ({
+      .formatWith<IAbstractError>(({ param, msg, value, location }) => ({
         msg: msg || ReasonPhrases.BAD_REQUEST,
         param,
         value,

@@ -6,6 +6,7 @@ export default [
     .withMessage('Please enter your email')
     .isEmail()
     .withMessage('Please enter a valid email')
-    .trim(),
+    .trim()
+    .toLowerCase(),
   body('password').notEmpty().withMessage('Please enter your password').isString(),
 ];
