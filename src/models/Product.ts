@@ -77,19 +77,10 @@ const productSchema = new Schema<IProductDocument>({
       },
     },
   ],
-  rating: Number,
-  isOnSale: {
-    type: Boolean,
-    immutable: true,
-  },
   discountPercentage: {
     type: Number,
     min: 0,
     max: 100,
-  },
-  salePrice: {
-    type: Number,
-    immutable: true,
   },
   shippingCost: Number,
   tags: {
@@ -101,29 +92,29 @@ const productSchema = new Schema<IProductDocument>({
   },
 });
 
-// TODO: pre save not working properly - inOnSale and salePrice should be update on product updates
-productSchema.pre('save', function isOnSale(next) {
-  if (!!this.discountPercentage && this.discountPercentage > 0) {
-    const discountAmount = (this.price * this.discountPercentage) / 100;
-
-    this.isOnSale = true;
-    this.salePrice = parseFloat((this.price - discountAmount).toFixed(2));
-  }
-
-  next();
+productSchema.virtual('isOnSale').get(function getIsOnSale() {
+  return !!this.discountPercentage;
 });
 
-productSchema.pre('save', function getRating(next) {
-  const { reviews } = this;
+productSchema.virtual('salePrice').get(function getSalePrice() {
+  if (!this.discountPercentage) return this.price;
 
-  if (reviews && reviews.length > 0) {
-    const ratingSum = reviews.reduce((acc, { rating }) => acc + rating, 0);
-    const average = ratingSum / reviews.length;
+  const discountAmount = (this.price * this.discountPercentage) / 100;
 
-    this.rating = average;
+  return parseFloat((this.price - discountAmount).toFixed(2));
+});
+
+productSchema.virtual('ratingAverage').get(function getRating() {
+  if (!this.reviews || this.reviews.length === 0) {
+    return null;
   }
 
-  next();
+  const ratingSum = this.reviews.reduce((acc, { rating }) => acc + rating, 0);
+  const average = ratingSum / this.reviews.length;
+
+  return average;
 });
+
+productSchema.set('toJSON', { virtuals: true });
 
 export const Product = db.model('Product', productSchema);
