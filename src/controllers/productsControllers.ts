@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 
 import { Product } from '@models/index';
 import { CustomError } from '@errors/index';
-// test
 
 const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
   const paginatedProducts = req.paginatedResults;

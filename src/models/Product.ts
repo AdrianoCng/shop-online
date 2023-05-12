@@ -18,10 +18,7 @@ export interface IProduct {
   category: string;
   image?: string;
   reviews?: Review[];
-  rating: number;
-  isOnSale?: boolean;
   discountPercentage?: number;
-  salePrice?: number;
   shippingCost?: number;
   tags?: string[];
 }
