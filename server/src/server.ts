@@ -6,8 +6,11 @@ import morgan from 'morgan';
 import { errorHandler } from '@middlewares/index';
 
 import router from '@routes/index';
+import path from 'path';
 
 const app = express();
+
+app.use(express.static(path.resolve('../client/dist')));
 
 app.use(cors());
 app.use(helmet());
@@ -15,6 +18,10 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use('/api/v1', router);
+
+app.get('*', (_, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+});
 
 app.use(errorHandler);
 
