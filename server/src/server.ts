@@ -2,11 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import path from 'path';
 
 import { errorHandler } from '@middlewares/index';
 
 import router from '@routes/index';
-import path from 'path';
 
 const app = express();
 
