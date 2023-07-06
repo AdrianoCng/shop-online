@@ -71,10 +71,27 @@ const addReview = async (req: Request, res: Response, next: NextFunction) => {
   return res.status(StatusCodes.OK).json(updatedProduct);
 };
 
+const getById = async (req: Request, res: Response, next: NextFunction) => {
+  const productID = req.params.id;
+
+  if (!productID) {
+    return next(new CustomError(StatusCodes.BAD_REQUEST));
+  }
+
+  const product = await Product.findById(productID);
+
+  if (!product) {
+    return next(new CustomError(StatusCodes.NOT_FOUND, 'Product not found'));
+  }
+
+  return res.status(StatusCodes.OK).json(product);
+};
+
 export default {
   getAllProducts,
   postProduct,
   deleteProduct,
   updateProduct,
   addReview,
+  getById,
 };
