@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from 'express';
 import { RefreshToken, User } from '@models/index';
 import { generateTokens } from '@utils/index';
 import { CustomError } from '@errors/index';
+import { Customer } from '@models/Customer';
 
 const registerUser = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
@@ -17,6 +18,10 @@ const registerUser = async (req: Request, res: Response, next: NextFunction) => 
   const newUser = await User.create({ email, password });
 
   const userID = newUser._id;
+
+  await Customer.create({
+    userID,
+  });
 
   const payload = {
     email,
